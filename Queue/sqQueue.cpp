@@ -47,6 +47,7 @@ int QueueLength(SqQueue Q)
 }
 
 //入队 在队尾插入一个新的元素
+//rear指向最后一个元素后面一位
 Status EnQueue(SqQueue &Q, QElemType e)
 {
     if((Q.rear + 1) % MAXQSIZE == Q.front) return ERROR;
