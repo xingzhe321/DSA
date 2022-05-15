@@ -69,7 +69,8 @@ int Index_BF(const string &S, const string &T)
 
 //KMP算法
 //求next数组,默认版本
-void getNext(int *next, const string &s)
+//5.13修改为static函数，使函数仅在本文件可见
+static void getNext(int *next, const string &s)
 {
     //指针i、j,分别指向后缀和前缀末尾位置
     //step1初始化
@@ -134,7 +135,8 @@ void getNxt(int * nxt, const string &s)
 }
 
 //KMP模式匹配
-int Index_KMP(string &S, string &T)
+//修改：增加static关键字
+static int Index_KMP(string &S, string &T)
 {
     int next[T.size()];
     getNxt(next, T);
