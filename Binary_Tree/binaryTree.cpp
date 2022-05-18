@@ -261,7 +261,46 @@ int TwoCount(BiTNode *T){
 //         << one << "\t度2结点" << two << endl;
 //}//先序AB##CD#E###样例通过
 
-//8
+//树的存储结构
+//1.双亲表示法 找双亲易 找孩子难
+//结点
+typedef struct PTNode {
+    TElemType date;
+    int parent;//双亲位置域
+} PTNode;
+
+//树
+#define MAX_TREE_SIZE 100
+typedef struct PTree {
+    PTNode nodes[MAX_TREE_SIZE];
+    int r, n;//根节点位置和结点个数
+} PTree;
+
+//2.孩子链表 找孩子易 找双亲难
+//孩子结点
+typedef struct CTNode {
+    int child;//孩子结点位置
+    struct CTNode* next;//指向下一个孩子结点
+} *ChildPtr;
+//双亲结点结构
+typedef struct {
+    TElemType data;
+    ChildPtr firstchild;
+} CTBox;
+//树结构
+typedef struct {
+    CTBox nodes[MAX_TREE_SIZE];
+    int r, n;//根节点位置和结点个数
+} CTree;
+
+//3.孩子兄弟表示法(二叉树表示法, 二叉链表表示法)(常用)
+//每个结点的两个指针域分别指向其第一个孩子结点和下一个兄弟结点
+typedef struct CSNode {
+    TElemType data;
+    struct CSNode* firstchild, * nextsibling;
+} CSNode, *CSTree;
+//树的存储结构结束
+
 
 //int main(){
 //    test();
