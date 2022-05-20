@@ -3,3 +3,5 @@
 *.out
 *.txt
 *.vs
+*.exe
+*.vscode
