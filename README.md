@@ -14,7 +14,7 @@ singleLinkList.cpp 单链表
 
 doubleLinkList.cpp 双向链表
 
-listUnion.cpp 线性表应用，未写全
+listUnion.cpp 线性表应用，未完成，排序算法结束后补充
 
 ### 3.Stack 栈
 
@@ -32,8 +32,22 @@ linkQueue.cpp链队列
 
 string.cpp 串，包含串的模式匹配算法
 
+KMP.cpp KMP算法单独拆分出来，含测试代码
+
 ### 6.Binary_Tree 二叉树
 
 binaryTree.cpp 二叉树
 
 补充：统计度为1、2结点个数
+
+HuffmanTree 哈夫曼树和哈夫曼编码
+
+补充：select函数实现，哈夫曼树生成后遍历输出测试代码
+
+### 7.Graph 图
+
+-----------------------------------------------------------------算法-----------------------------------------------------------------
+
+### 8.Search 查找
+
+### 9.Sort 排序

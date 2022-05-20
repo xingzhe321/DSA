@@ -120,6 +120,7 @@ void StackHuffmanCode(const HuffmanTree &HT, HuffmanCode &HC, const int &n){
 		while (ch = cd.top())
 		{
 			HC[i][ind++] = ch;
+			cd.pop();
 		}
 	}
 }
