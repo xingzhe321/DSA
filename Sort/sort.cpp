@@ -102,3 +102,116 @@ void Bubble_Sort(SqList &L){
         m--;
     }
 }
+
+//算法5.快速排序
+int Partition(SqList &L, int low, int high){
+    //对顺序表L中的子表r[low, ..., high]进行一趟排序
+    L.r[0] = L.r[low];//子表的low处做枢轴记录，存放到L.r[0]
+    while (low < high){//从表的两端交替地向中间扫描
+        while (low < high && L.r[high].key >= L.r[0].key) high--;
+        L.r[low] = L.r[high];//右边搜索到的比枢轴记录小的记录移到低端
+        while (low < high && L.r[low].key <= L.r[0].key) low++;
+        L.r[high] = L.r[low];//左边搜索到的比枢轴记录大的记录移到高端
+    } 
+    L.r[low] = L.r[0];//枢轴记录到位
+    return low;//返回枢轴位置
+}
+
+void QSort(SqList &L, int low, int high){
+    if (low < high){
+        int pivotloc = Partition(L, low, high);//返回第一次排序枢轴位置
+        QSort(L, low, pivotloc - 1);//对左子表递归排序
+        QSort(L, pivotloc + 1, high);//对右子表递归排序
+    }
+}
+
+void QuickSort(SqList &L){//对顺序表L做快速排序
+    QSort(L, 1, L.length);
+}
+
+//选择排序
+//算法6.简单选择排序
+void SelectSort(SqList &L){
+    for (int i = 1; i < L.length; i++){//L.r[0]不用做监视哨可以i = 0; i < L.length - 1; i++
+        int k  = i;//指向最小值位置
+        for (int j = i + 1; i <= L.length; j++){
+            if (L.r[j].key < L.r[k].key) k = j;
+        }
+        if (k != i) swap(L.r[i], L.r[k]);
+    }
+}
+
+//算法7. 堆排序
+/**
+ * @brief 筛选法调整堆(大根堆)
+ * 假设s + 1分支已经是堆，将s分支调整为以r[s]为根的大根堆
+ * @param L 
+ * @param s 根结点下标
+ * @param m 最后一个结点下标
+ */
+void HeapAdjust(SqList &L, int s, int m){
+    RedType rc = L.r[s];//根结点
+    for (int j = 2 * s; j <= m; j *= 2){
+        if (j < m && L.r[j].key < L.r[j + 1].key) j++;
+        if (rc.key >= L.r[j].key) break;//是rc不是r[s]
+        L.r[s] = L.r[j];
+        s = j;
+    }
+    L.r[s] = rc;
+}
+/**
+ * @brief 创建堆
+ * 从最后一个叶子结点(n)的双亲结点(n/2)开始，往上(n/2 - 1、...、 1)
+ * @param L 
+ */
+void CreatHeap(SqList &L){
+    int n = L.length;
+    for (int i = n / 2; i >= 1; i--){
+        HeapAdjust(L, i, n);
+    }
+}
+
+void HeapSort(SqList &L){
+    CreatHeap(L);
+    for (int i = L.length; i > 1; i--){
+        swap(L.r[1], L.r[i]);
+        HeapAdjust(L, 1, i - 1);
+    }
+}
+
+//算法8.归并排序
+/**
+ * @brief 相邻两个有序子序列的归并 
+ * 两个R归并成一个T
+ * @param R 被归并子序列
+ * @param T 归并子序列（合成后存放的）
+ * @param low R1[low...]
+ * @param mid R1[...mid] R2[mid + 1...]
+ * @param high T[low...high]
+ */
+void Merge(RedType R[], RedType T[], int low, int mid, int high){
+    int i = low, j = mid + 1, k = low;
+    while (i <= mid && j <= high){
+        if (R[i].key <= R[j].key) T[k++] = R[i++];//i指向的记录存入T中，同时移动i
+        else T[k++] = R[j++];//这里严蔚敏教材上T[k] = R[j++]，应该写错了?
+    }
+    while (i <= mid) T[k++] = R[i++];
+    while (j <= mid) T[k++] = R[j++];
+}
+
+void MSort(RedType R[], RedType T[], int low, int high){
+    RedType S[MAXSIZE + 1];
+    if (low == high) T[low] = R[low];
+    else{
+        int mid = (low + high) / 2;
+        MSort(R, S, low, mid);
+        MSort(R, S, mid + 1, high);
+        Merge(S,T,low, mid, high);
+    }
+}
+
+void MergeSort(SqList &L){
+    MSort(L.r, L.r, 1, L.length);
+}
+
+//算法9.基数排序（桶排序）待补充
